@@ -21,8 +21,10 @@ class Main {
       } else if (selectedMenu == 3) {
         addMember();
       } else if (selectedMenu == 4) {
-        borrowBook();
+        addbook();
       } else if (selectedMenu == 5) {
+        borrowBook();
+      } else if (selectedMenu == 6) {
         returnBook();
       } else {
         System.out.println("wrong input");
@@ -38,79 +40,52 @@ class Main {
     System.out.println("1. show books list");
     System.out.println("2. show members list");
     System.out.println("3. add member");
-    System.out.println("4. borrow book");
-    System.out.println("5. return book");
+    System.out.println("4. add book");
+    System.out.println("5. borrow book");
+    System.out.println("6. return book");
     System.out.println("================================");
   }
 
   public static void initLibraryData() {
-    Book book1 = new Book();
-    book1.id = "1";
-    book1.title = "pemrograman java";
+    library.addBook(new Book("pemrograman java", "1"), true);
+    library.addBook(new Book("pemrograman oop", "2"), true);
+    library.addBook(new Book("pemrograman android", "3"), true);
 
-    Book book2 = new Book();
-    book2.id = "2";
-    book2.title = "pemrograman oop";
+    library.addMember(new Member("Aka", "1"), true);
+    library.addMember(new Member("Budi", "2"), true);
+    library.addMember(new Member("Tono", "3"), true);
 
-    Book book3 = new Book();
-    book3.id = "3";
-    book3.title = "pemrograman android";
-
-    Member member1 = new Member();
-    member1.id = "1";
-    member1.name = "aka";
-
-    Member member2 = new Member();
-    member2.id = "2";
-    member2.name = "budi";
-
-    Member member3 = new Member();
-    member3.id = "3";
-    member3.name = "tono";
-
-    library.books.add(book1);
-    library.books.add(book2);
-    library.books.add(book3);
-
-    library.members.add(member1);
-    library.members.add(member2);
-    library.members.add(member3);
   }
 
   public static int chooseMenu() {
     System.out.print("choose menu : ");
     int pilihan = scan.nextInt();
+    scan.nextLine();
     return pilihan;
   }
 
   public static void showBooks() {
-    for (Book book : library.books) {
-      System.out.println(book.id + " " + book.title);
-    }
+    library.showBooks();
   }
 
   public static void showMembers() {
-    for (Member member : library.members) {
-      System.out.println(member.id + " " + member.name);
-    }
+    library.showMem();
   }
 
   public static void addMember() {
-    Member member = new Member();
+    System.out.print("name : ");
+    String memName = scan.nextLine();
 
     System.out.print("id : ");
-    member.id = scan.next();
+    String memId = scan.next();
 
-    System.out.print("name : ");
-    member.name = scan.next();
-
-    library.addMember(member);
+    library.addMember(new Member(memName, memId), true);
   }
 
   public static void borrowBook() {
     System.out.print("id member : ");
     String memberId = scan.next();
-
+ 
     System.out.print("id book : ");
     String bookId = scan.next();
 
@@ -126,4 +101,15 @@ class Main {
 
     library.receiveBook(memberId, bookId);
   }
+
+  public static void addbook() {
+    System.out.print("book title : ");
+    String bookTitle = scan.nextLine();
+
+    System.out.print("id book : ");
+    String bookId = scan.next();
+
+    library.addBook(new Book(bookTitle, bookId), true);
+  }
+
 }
